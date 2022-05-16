@@ -8,31 +8,39 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
+  int newIndex=0;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       body: Center(child: Text('HAii'),),
       bottomNavigationBar: BottomNavigationBar(
+        
+        currentIndex: newIndex,
+        onTap: (index){
+          setState(() {
+            newIndex=index;
+          });
+        },
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.note),
-            label: 'Home',
+            label: 'Attendance',
 
             ),
            BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Spot',
 
             ),
            BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.heart_broken),
+            label: 'Notification',
 
             ),
            BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.person),
+            label: 'Profile',
 
             ),
         ],)
