@@ -23,12 +23,12 @@ class _LoginPageState extends State<LoginPage> {
         width: screenWidth,
         child: Stack(
           children: [
-            // SizedBox(
-            //   height: screenHeight * 1.2,
-            //   width: screenWidth * 1.3,
-            //   child:
-            //       Lottie.asset('assets/animations/logo.json', animate: true),
-            // ),
+            SizedBox(
+              height: screenHeight * 1.2,
+              width: screenWidth * 1.3,
+              child:
+                  Image.asset("assets/applogo.gif"),
+            ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
