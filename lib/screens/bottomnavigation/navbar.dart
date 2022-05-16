@@ -24,17 +24,17 @@ class _NavBarState extends State<NavBar> {
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.note),
+            icon: Icon(Icons.assignment),
             label: 'Attendance',
 
             ),
            BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.add_card),
             label: 'Spot',
 
             ),
            BottomNavigationBarItem(
-            icon: Icon(Icons.heart_broken),
+            icon: Icon(Icons.notifications_active_rounded),
             label: 'Notification',
 
             ),
