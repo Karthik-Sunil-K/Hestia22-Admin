@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hestiaadmin/screens/bottomnavigation/navbar.dart';
 
+import 'package:hestiaadmin/screens/bottomnavigation/navbar.dart';
 import 'screens/login/login.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Login()));
+                        MaterialPageRoute(builder: (context) => const LoginPage()));
                   },
                   child: const Text("login")),
             ],
