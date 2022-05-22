@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hestiaadmin/screens/attendance/attendance.dart';
 
 import 'package:hestiaadmin/screens/bottomnavigation/navbar.dart';
+import 'package:hestiaadmin/screens/spot_registration/spot_registration.dart';
 import 'screens/login/login.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 
@@ -58,9 +60,29 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   child: const Text("home")),
               ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Attendance()));
+                },
+                child: const Text("attendance"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SpotRegistration()));
+                },
+                child: const Text("spot-registration"),
+              ),
+              ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()));
                   },
                   child: const Text("login")),
             ],
@@ -78,5 +100,4 @@ class Constants {
   static const TextStyle primaryText = TextStyle();
   static const TextStyle secondaryText = TextStyle();
   static const TextStyle tertiaryText = TextStyle();
-
 }
