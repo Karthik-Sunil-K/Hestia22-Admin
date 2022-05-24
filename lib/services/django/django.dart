@@ -1,18 +1,28 @@
 import 'dart:convert';
+import 'package:hestiaadmin/models/event.dart';
+import 'package:hestiaadmin/models/participant.dart';
 import 'package:http/http.dart' as http;
 
 String hostUrl = "https://backend.hestiatkmce.live";
 
-Future<List<dynamic>> getAllEvents() async {
-  http.Response response =
-      await http.get(Uri.parse(hostUrl + "/api/v1/event/coordinator/"));
-  return json.decode(response.body)['results'];
+Future<List<Event>> getAllEvents() async {
+  final String token = 'fdee6ed3ce930d356ea67807b4d1de44dfcae873';
+
+  http.Response response = await http.get(
+      Uri.parse(hostUrl + "/api/v1/event/coordinator/"),
+      headers: {'Authorization': "token " + token});
+  final result = eventFromJson(json.decode(response.body)['results']);
+  return result;
 }
 
-Future<List<dynamic>> getParticipants(String eventSlug) async {
-  http.Response response = await http
-      .get(Uri.parse(hostUrl + "/api/v1/event/attendance/$eventSlug/"));
-  return json.decode(response.body)['results'];
+Future<List<Participant>> getParticipants(String eventSlug) async {
+  final String token = 'fdee6ed3ce930d356ea67807b4d1de44dfcae873';
+  http.Response response = await http.get(
+      Uri.parse(hostUrl + "/api/v1/event/attendance/$eventSlug"),
+      headers: {'Authorization': "token " + token});
+  print(response.body);
+  final result = participantFromJson(response.body);
+  return result;
 }
 
 Future<List<dynamic>> postAttendance(String teamSlug) async {
