@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hestiaadmin/screens/attendance/api_provider.dart';
 import 'package:hestiaadmin/screens/attendance/attendance.dart';
 
 import 'package:hestiaadmin/screens/bottomnavigation/navbar.dart';
 import 'package:hestiaadmin/screens/spot_registration/spot_registration.dart';
+import 'package:provider/provider.dart';
 import 'screens/login/login.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 
@@ -16,13 +18,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Hestia22',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ApiProvider>(
+          create: (context) => ApiProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Hestia22',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(),
       ),
-      home: const MyHomePage(),
     );
   }
 }
@@ -61,10 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text("home")),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Attendance()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Attendance()));
                 },
                 child: const Text("attendance"),
               ),

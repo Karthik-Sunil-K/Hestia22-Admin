@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hestiaadmin/models/event.dart';
+import 'package:hestiaadmin/models/participant.dart';
+import 'package:hestiaadmin/screens/attendance/api_provider.dart';
+import 'package:provider/provider.dart';
 
 class AttendanceDetailed extends StatelessWidget {
-  AttendanceDetailed({Key? key}) : super(key: key);
+  AttendanceDetailed({Key? key, required this.event}) : super(key: key);
+  final Event event;
+  bool isInit = true;
 
   bool value = true;
 
@@ -9,51 +15,40 @@ class AttendanceDetailed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (isInit) {
+      context.read<ApiProvider>().fetchParticipants('wordsmith');
+      isInit = false;
+    }
+
+    List participants = context.read<ApiProvider>().participants;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.grey.shade900,
-          title: const Text('Event Name'),
+          title: Text(event.title),
         ),
         backgroundColor: Colors.grey.shade900,
         body: Column(
           children: [
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  children: const [
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                    AttendanceTile(alternate: true),
-                    AttendanceTile(alternate: false),
-                  ],
-                ),
+                child: context.watch<ApiProvider>().participantsLoading
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.75,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount:
+                            context.watch<ApiProvider>().participants.length,
+                        itemBuilder: ((context, index) => AttendanceTile(
+                              alternate: index % 2 == 0,
+                              participant: participants[index],
+                            )),
+                      ),
               ),
             ),
             Container(
@@ -66,7 +61,7 @@ class AttendanceDetailed extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   primary: const Color.fromRGBO(68, 223, 180, 1),
                 ),
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pop(),
                 child: const Text(
                   'Submit',
                   style: TextStyle(
@@ -84,9 +79,11 @@ class AttendanceDetailed extends StatelessWidget {
 
 class AttendanceTile extends StatefulWidget {
   final bool alternate;
+  final Participant participant;
 
   const AttendanceTile({
     Key? key,
+    required this.participant,
     required this.alternate,
   }) : super(key: key);
 
@@ -102,9 +99,12 @@ class _AttendanceTileState extends State<AttendanceTile> {
       tileColor: widget.alternate ? Color.fromARGB(255, 50, 50, 50) : null,
       textColor: Colors.white,
       iconColor: Colors.white,
-      title: const Text(
-        'Name',
+      title: Text(
+        widget.participant.teamLeader.name,
       ),
+      // subtitle: Text(
+      //   widget.participant.id,
+      // ),
       trailing: Checkbox(
         activeColor: const Color.fromRGBO(68, 223, 180, 1),
         fillColor: MaterialStateColor.resolveWith(
@@ -115,7 +115,8 @@ class _AttendanceTileState extends State<AttendanceTile> {
         value: value,
         onChanged: (_) {
           setState(() {
-            value = _!;
+            context.read<ApiProvider>().markAttendance(widget.participant, _!);
+            value = _;
           });
         },
       ),
