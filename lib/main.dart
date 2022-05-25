@@ -3,6 +3,7 @@ import 'package:hestiaadmin/screens/attendance/attendance.dart';
 
 import 'package:hestiaadmin/screens/bottomnavigation/navbar.dart';
 import 'package:hestiaadmin/screens/spot_registration/spot_registration.dart';
+import 'package:hestiaadmin/screens/winners/add_winners.dart';
 import 'screens/login/login.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      // home: const MyHomePage(),
+      home: AddWinners(),
     );
   }
 }
