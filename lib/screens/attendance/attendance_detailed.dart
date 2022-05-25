@@ -93,6 +93,13 @@ class AttendanceTile extends StatefulWidget {
 
 class _AttendanceTileState extends State<AttendanceTile> {
   bool value = false;
+
+  @override
+  void initState() {
+    super.initState();
+    value = widget.participant.attendance;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(

@@ -29,6 +29,7 @@ class ApiProvider with ChangeNotifier {
 
   void markAttendance(Participant participant, bool attendance) async {
     //TODO: Api CALL
-    print(participant.teamLeader.name + attendance.toString());
+    await putAttendance(participant.slug, attendance);
+    print(participant.slug + attendance.toString());
   }
 }

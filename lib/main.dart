@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hestiaadmin/screens/attendance/api_provider.dart';
 import 'package:hestiaadmin/screens/attendance/attendance.dart';
+import 'package:hestiaadmin/screens/attendance/team_details.dart';
 
 import 'package:hestiaadmin/screens/bottomnavigation/navbar.dart';
 import 'package:hestiaadmin/screens/spot_registration/spot_registration.dart';
@@ -74,6 +75,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       MaterialPageRoute(builder: (context) => Attendance()));
                 },
                 child: const Text("attendance"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TeamDetails()));
+                },
+                child: const Text("team-details"),
               ),
               ElevatedButton(
                 onPressed: () {

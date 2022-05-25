@@ -17,18 +17,21 @@ class Participant {
     required this.teamLeader,
     required this.attendance,
     required this.isSpot,
+    required this.slug,
   });
 
   final String id;
   final TeamLeader teamLeader;
   final bool attendance;
   final bool isSpot;
+  final String slug;
 
   factory Participant.fromJson(Map<String, dynamic> json) => Participant(
         id: json["id"],
         teamLeader: TeamLeader.fromJson(json["team_leader"]),
         attendance: json["attendance"],
         isSpot: json["is_spot"],
+        slug: json["slug"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +39,7 @@ class Participant {
         "team_leader": teamLeader.toJson(),
         "attendance": attendance,
         "is_spot": isSpot,
+        "slug": slug,
       };
 }
 
