@@ -33,7 +33,6 @@ class _NavBarState extends State<NavBar> {
            BottomNavigationBarItem(
             icon: Icon(Icons.add_card),
             label: 'Winner',
-
             ),
            
         ],)
