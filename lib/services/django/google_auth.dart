@@ -128,7 +128,8 @@ class GoogleAuth extends ChangeNotifier {
           headers: {'Authorization': "token " + token!},
           body: {"email1": "", "email2": "", "email3": email3.toString()});
     }
-    print(response.statusCode);
-    return json.decode(response.body);
+    Map map=json.decode(response.body);
+    map['status_code'] = response.statusCode;
+    return map;
   }
 }

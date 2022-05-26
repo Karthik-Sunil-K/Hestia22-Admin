@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hestiaadmin/main.dart';
 import 'package:hestiaadmin/screens/attendance/api_provider.dart';
-import 'package:hestiaadmin/screens/attendance/attendance_detailed.dart';
 import 'package:hestiaadmin/screens/direction/director.dart';
 import 'package:provider/provider.dart';
 
@@ -18,25 +18,50 @@ class Attendance extends StatelessWidget {
         context.read<ApiProvider>().fetchEvents();
       }
       return SafeArea(
-          child: Scaffold(
-        backgroundColor: Colors.grey.shade900,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10.0,
-            vertical: 20,
-          ),
-          child: context.watch<ApiProvider>().eventsLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ListView.builder(
-                  itemCount: context.watch<ApiProvider>().events.length,
-                  itemBuilder: (BuildContext context, int index) => EventCard(
-                    event: context.read<ApiProvider>().events[index],
+        child: Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 150,
+            centerTitle: true,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            title: Column(
+              children: [
+                Text(
+                  "Welcome ${auth.googleSignIn.currentUser!.displayName} 🖐",
+                  style: const TextStyle(
+                    fontFamily: 'Helvetica',
+                    color: Colors.white, fontSize: 24
                   ),
                 ),
+                const Text(
+                  "\nYour Events",
+                  style: TextStyle(
+                    fontFamily: 'Helvetica',
+                    color: Colors.white,
+                    fontSize: 22
+                  ),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Colors.grey.shade900,
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.05,
+                vertical: MediaQuery.of(context).size.height * 0.005),
+            child: context.watch<ApiProvider>().eventsLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ListView.builder(
+                    itemCount: context.watch<ApiProvider>().events.length,
+                    itemBuilder: (BuildContext context, int index) => EventCard(
+                      event: context.read<ApiProvider>().events[index],
+                    ),
+                  ),
+          ),
         ),
-      ));
+      );
     });
   }
 }
@@ -53,18 +78,21 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("ontap");
         Navigator.of(context).push(MaterialPageRoute(
-            builder: ((context) => Director(eventDetails: event,))));
+            builder: ((context) => Director(
+                  eventDetails: event,
+                ))));
       },
       child: SizedBox(
-        height: 150,
+        height: MediaQuery.of(context).size.height * 0.12,
         width: double.infinity,
         child: Card(
           color: Colors.grey.shade800,
           elevation: 5,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.1,
+                vertical: MediaQuery.of(context).size.height * 0.03),
             child: Center(
               child: Text(
                 event.title,
@@ -72,7 +100,7 @@ class EventCard extends StatelessWidget {
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   overflow: TextOverflow.ellipsis,
-                  fontSize: 32,
+                  fontSize: 20,
                 ),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hestiaadmin/services/django/google_auth.dart';
+import '../../main.dart';
 import '../../services/django/django.dart';
 
 class AddWinners extends StatefulWidget {
@@ -43,151 +44,6 @@ class _AddWinnersState extends State<AddWinners> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              // AnimatedPadding(
-              //   duration: const Duration(seconds: 1),
-              //   curve: Curves.decelerate,
-              //   padding: start
-              //       ? const EdgeInsets.only(left: 20, right: 20)
-              //       : const EdgeInsets.only(left: 10, right: 10),
-              //   child: AnimatedOpacity(
-              //     duration: const Duration(seconds: 1),
-              //     curve: Curves.decelerate,
-              //     opacity: start ? 1 : 0,
-              //     child: AnimatedContainer(
-              //       duration: const Duration(seconds: 1),
-              //       curve: Curves.fastLinearToSlowEaseIn,
-              //       height: size.height * .065,
-              //       width: size.width * .92,
-              //       decoration: BoxDecoration(
-              //         color: Colors.grey.withOpacity(.05),
-              //         borderRadius: BorderRadius.circular(15),
-              //       ),
-              //       child: Padding(
-              //         padding: const EdgeInsets.only(left: 20),
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //           crossAxisAlignment: CrossAxisAlignment.center,
-              //           children: [
-              //             Expanded(
-              //               child: AnimatedPadding(
-              //                 duration: const Duration(seconds: 1),
-              //                 curve: Curves.decelerate,
-              //                 padding: start
-              //                     ? const EdgeInsets.only(left: 0)
-              //                     : const EdgeInsets.only(left: 10),
-              //                 child: TypeAheadField(
-              //                   textFieldConfiguration: TextFieldConfiguration(
-              //                     controller: _textEditingController,
-              //                     style: const TextStyle(color: Colors.grey),
-              //                     cursorColor: Colors.white,
-              //                     cursorRadius: const Radius.circular(10),
-              //                     textCapitalization:
-              //                         TextCapitalization.sentences,
-              //                     decoration: InputDecoration(
-              //                       focusedBorder: const OutlineInputBorder(
-              //                           borderRadius: BorderRadius.all(
-              //                               Radius.circular(5.0)),
-              //                           borderSide:
-              //                               BorderSide(color: Colors.grey)),
-              //                       icon: AnimatedPadding(
-              //                         duration: const Duration(seconds: 1),
-              //                         curve: Curves.decelerate,
-              //                         padding: start
-              //                             ? const EdgeInsets.only(left: 0)
-              //                             : const EdgeInsets.only(left: 20),
-              //                         child: const Text(
-              //                           'First: ', style: TextStyle(color: Colors.white),
-              //                         ),
-              //                       ),
-              //                       hintText: "Team Leader Name",
-              //                       hintStyle: const TextStyle(
-              //                         fontFamily: 'Helvetica',
-              //                         color: Colors.grey,
-              //                         fontSize: 16,
-              //                         fontWeight: FontWeight.w400,
-              //                       ),
-              //                       hoverColor: Colors.transparent,
-              //                       focusColor: Colors.transparent,
-              //                       border: InputBorder.none,
-              //                       contentPadding: const EdgeInsets.all(0),
-              //                     ),
-              //                   ),
-              //                   suggestionsBoxDecoration:
-              //                       SuggestionsBoxDecoration(
-              //                     color: Colors.black,
-              //                     borderRadius: BorderRadius.circular(10),
-              //                   ),
-              //                   itemBuilder: (BuildContext context, suggestion) {
-              //                     return ListTile(
-              //                       onTap: () {
-              //                         // for (var map in widget.a!) {
-              //                         //   if (map['title'] ==
-              //                         //       suggestion.toString()) {
-              //                         //     Navigator.push(
-              //                         //         context,
-              //                         //         MaterialPageRoute(
-              //                         //             builder: (context) =>
-              //                         //                 EventDetails(
-              //                         //                     map)));
-              //                         //   }
-              //                         // }
-              //                       },
-              //                       title: Text(
-              //                         suggestion.toString(),
-              //                         style: const TextStyle(
-              //                           color: Colors.white,
-              //                           fontFamily: "Helvetica",
-              //                           fontSize: 12,
-              //                           fontWeight: FontWeight.bold,
-              //                         ),
-              //                       ),
-              //                     );
-              //                   },
-              //                   suggestionsCallback: (String pattern) async {
-              //                     return _getSuggestions(pattern);
-              //                   },
-              //                   hideOnError: true,
-              //                   hideOnEmpty: true,
-              //                   hideOnLoading: true,
-              //                   hideSuggestionsOnKeyboardHide: true,
-              //                   onSuggestionSelected: (String suggestion) {},
-              //                 ),
-              //               ),
-              //             ),
-              //             AnimatedOpacity(
-              //               duration: const Duration(milliseconds: 1800),
-              //               curve: Curves.decelerate,
-              //               opacity: start ? 1 : 0,
-              //               child: GestureDetector(
-              //                 onTap: () {
-              //                   //if (mounted) {
-              //                   //  setState(() {
-              //                   //     FocusManager.instance.primaryFocus
-              //                   //        ?.unfocus();
-              //                   //  });
-              //                   //}
-              //                 },
-              //                 child: AnimatedContainer(
-              //                   duration: const Duration(seconds: 1),
-              //                   curve: Curves.decelerate,
-              //                   decoration: BoxDecoration(
-              //                     borderRadius: BorderRadius.circular(10),
-              //                   ),
-              //                   height: size.height * .05,
-              //                   width: size.width * .05,
-              //                   child: const Icon(
-              //                     FontAwesomeIcons.sliders,
-              //                     size: 18,
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               const Center(
                   child: Text(
                 "Add Winners",
@@ -228,14 +84,36 @@ class _AddWinnersState extends State<AddWinners> {
                   onPressed: () async {
                     print("The slug is : ");
                     print(widget.slug);
-                    if (email1==null&&
-                        email2==null &&
-                        email3==null ) {
+                    if (email1 == null && email2 == null && email3 == null) {
                       print("all null ");
                     } else {
-                      dynamic result =
-                          await putWinners(email1, email2, email3, widget.slug);
-
+                      Map result = await auth.putWinners(
+                          email1, email2, email3, widget.slug);
+                      return showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: Text(result['detail']),
+                                titleTextStyle: const TextStyle(
+                                  fontFamily: 'Helvetica',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                                backgroundColor: Colors.grey.shade900,
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text("Close",style: TextStyle(
+                                        fontFamily: 'Helvetica',
+                                        color: Colors.white,
+                                      ),)),
+                                ],
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                              ));
                     }
                   },
                   child: const Text(

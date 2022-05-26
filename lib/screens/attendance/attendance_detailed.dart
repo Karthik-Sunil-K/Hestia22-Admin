@@ -25,7 +25,7 @@ class AttendanceDetailed extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.grey.shade900,
-          title: Text(event.title),
+          title: Text(event.title,overflow: TextOverflow.clip),
         ),
         backgroundColor: Colors.grey.shade900,
         body: Column(
@@ -51,25 +51,7 @@ class AttendanceDetailed extends StatelessWidget {
                       ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade900,
-              ),
-              padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: const Color.fromRGBO(68, 223, 180, 1),
-                ),
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
+
           ],
         ),
       ),
