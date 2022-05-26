@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hestiaadmin/models/event.dart';
 import 'package:hestiaadmin/models/participant.dart';
 import 'package:hestiaadmin/screens/attendance/api_provider.dart';
+import 'package:hestiaadmin/screens/attendance/participant_details.dart';
 import 'package:provider/provider.dart';
 
 class AttendanceDetailed extends StatelessWidget {
@@ -20,12 +21,20 @@ class AttendanceDetailed extends StatelessWidget {
       isInit = false;
     }
 
-    List participants = context.read<ApiProvider>().participants;
+    List participantsList = context.read<ApiProvider>().participants;
+    participantsList.sort((a, b) => a.teamLeader.name
+        .toString()
+        .toLowerCase()
+        .compareTo(b.teamLeader.name.toString().toLowerCase()));
+
+    for (int i = 0; i < participantsList.length; i++) {}
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.grey.shade900,
-          title: Text(event.title,overflow: TextOverflow.clip),
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          title: Text(event.title, overflow: TextOverflow.ellipsis),
         ),
         backgroundColor: Colors.grey.shade900,
         body: Column(
@@ -36,22 +45,40 @@ class AttendanceDetailed extends StatelessWidget {
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height * 0.75,
                         child: const Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: Color.fromRGBO(68, 223, 180, 1),
+                          ),
                         ),
                       )
                     : ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         itemCount:
                             context.watch<ApiProvider>().participants.length,
                         itemBuilder: ((context, index) => AttendanceTile(
                               alternate: index % 2 == 0,
-                              participant: participants[index],
+                              participant: participantsList[index],
                             )),
                       ),
               ),
             ),
-
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: FloatingActionButton.extended(
+                  backgroundColor: Colors.grey.shade600,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  label: const Text(
+                    "Submit",
+                    style:
+                        TextStyle(color: Colors.white, fontFamily: 'Helvetica'),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -85,7 +112,14 @@ class _AttendanceTileState extends State<AttendanceTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: widget.alternate ? Color.fromARGB(255, 50, 50, 50) : null,
+      onTap: (() => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: ((context) =>
+                  ParticipantDetails(participant: widget.participant)),
+            ),
+          )),
+      tileColor:
+          widget.alternate ? const Color.fromARGB(255, 50, 50, 50) : null,
       textColor: Colors.white,
       iconColor: Colors.white,
       title: Text(

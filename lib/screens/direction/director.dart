@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hestiaadmin/models/event.dart';
 import 'package:hestiaadmin/screens/attendance/attendance_detailed.dart';
+import 'package:hestiaadmin/screens/winners/show_winners.dart';
 
-import '../attendance/attendance.dart';
 import '../winners/add_winners.dart';
 
 class Director extends StatefulWidget {
@@ -29,8 +28,11 @@ class _DirectorState extends State<Director> {
               height: MediaQuery.of(context).size.height * 0.07,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AttendanceDetailed(event: widget.eventDetails!)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AttendanceDetailed(event: widget.eventDetails!)));
                 },
                 child: const Text(
                   "Mark Attendance",
@@ -40,7 +42,7 @@ class _DirectorState extends State<Director> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: const Color.fromRGBO(68, 223, 180, 1),
+                  primary: Colors.white,
                 ),
               ),
             ),
@@ -56,7 +58,10 @@ class _DirectorState extends State<Director> {
                 onPressed: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  AddWinners(slug: widget.eventDetails!.slug,)));
+                      MaterialPageRoute(
+                          builder: (context) => AddWinners(
+                                slug: widget.eventDetails!.slug,
+                              )));
                 },
                 child: const Text(
                   "Add Winners",
@@ -66,7 +71,36 @@ class _DirectorState extends State<Director> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: const Color.fromRGBO(68, 223, 180, 1),
+                  primary: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.04,
+          ),
+          Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.65,
+              height: MediaQuery.of(context).size.height * 0.07,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ShowWinners(
+                                event: widget.eventDetails!,
+                              )));
+                },
+                child: const Text(
+                  "Show Winners",
+                  style: TextStyle(
+                    fontFamily: 'Helvetica',
+                    color: Colors.black,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
                 ),
               ),
             ),

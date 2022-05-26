@@ -2,7 +2,6 @@
 //
 //     final participant = participantFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<Participant> participantFromJson(String str) => List<Participant>.from(
@@ -11,7 +10,7 @@ List<Participant> participantFromJson(String str) => List<Participant>.from(
 String participantToJson(List<Participant> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Participant {
+class Participant{
   Participant({
     required this.id,
     required this.teamLeader,
@@ -31,7 +30,7 @@ class Participant {
         teamLeader: TeamLeader.fromJson(json["team_leader"]),
         attendance: json["attendance"],
         isSpot: json["is_spot"],
-        slug: json["slug"],
+        slug: json["slug"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hestiaadmin/screens/attendance/attendance.dart';
 import 'package:lottie/lottie.dart';
 import 'package:hestiaadmin/main.dart' as main;
 
@@ -39,8 +40,8 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: const BoxDecoration(
                         color: Color(0xff121212),
                         borderRadius: BorderRadius.all(Radius.circular(25))),
-                    height: screenHeight*0.075,
-                    width: screenWidth*0.8,
+                    height: screenHeight * 0.075,
+                    width: screenWidth * 0.8,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),
                       child: RoundedButton(
@@ -50,9 +51,11 @@ class _LoginPageState extends State<LoginPage> {
                             _text = 'Logging you in...';
                           });
                           if (await main.auth.login()) {
-                            setState(() {
-                              _text = 'Logged in';
-                            });
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Attendance(),
+                                ));
                           } else {
                             _text = 'Error logging in...';
 
@@ -74,9 +77,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                   SizedBox(
-                    height: screenHeight*0.08,
+                  SizedBox(
+                    height: screenHeight * 0.08,
                   ),
+
                 ],
               ),
             ),

@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hestiaadmin/main.dart';
 import 'package:hestiaadmin/models/event.dart';
 import 'package:hestiaadmin/models/participant.dart';
+import 'package:hestiaadmin/models/team.dart';
 
-import '../../main.dart';
-import '../../services/django/django.dart';
 class ApiProvider with ChangeNotifier {
   bool eventsLoading = true;
   bool participantsLoading = true;
+  bool teamLoading = true;
+  bool winnersLoading = true;
 
   List<Event> events = [];
   List<Participant> participants = [];
+  Team? team;
+
+  Map winners = {};
 
   void fetchEvents() async {
     events = await auth.getAllEvents();
@@ -26,8 +31,27 @@ class ApiProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void fetchTeamDetails(String teamSlug) async {
+    teamLoading = true;
+    notifyListeners();
+
+    team = await auth.getTeamDetails(teamSlug);
+    teamLoading = false;
+    notifyListeners();
+  }
+
+  void fetchWinners(String eventSlug) async {
+    if (winnersLoading == false) {
+      winnersLoading = true;
+      notifyListeners();
+    }
+
+    winners = await auth.getWinners(eventSlug);
+    winnersLoading = false;
+    notifyListeners();
+  }
+
   void markAttendance(Participant participant, bool attendance) async {
-    //TODO: Api CALL
     await auth.putAttendance(participant.slug, attendance);
   }
 }

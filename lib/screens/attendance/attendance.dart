@@ -5,6 +5,7 @@ import 'package:hestiaadmin/screens/direction/director.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/event.dart';
+import '../login/login.dart';
 
 class Attendance extends StatelessWidget {
   bool isInit = true;
@@ -26,22 +27,54 @@ class Attendance extends StatelessWidget {
             backgroundColor: Colors.transparent,
             title: Column(
               children: [
-                Text(
-                  "Welcome ${auth.googleSignIn.currentUser!.displayName} 🖐",
-                  style: const TextStyle(
-                    fontFamily: 'Helvetica',
-                    color: Colors.white, fontSize: 24
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width*0.6,
+                              child: Text(
+                                "Welcome ${auth.googleSignIn.currentUser?.displayName ?? ""}  ",
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontFamily: 'Helvetica',
+                                  color: Colors.white, fontSize: 18
+                                ),
+                              ),
+                            ),
+                            Image.asset(
+                              "assets/wave.gif",
+                              height: MediaQuery.of(context).size.height * .035,
+                              alignment: Alignment.centerLeft,
+                              width: MediaQuery.of(context).size.height * .032,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    IconButton(onPressed: ()async{
+                      Future.delayed(const Duration(milliseconds: 800),
+                              () async {
+                            await auth.logOut();
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage(),));
+                          });
+                    }, icon:const Icon(Icons.logout))
+                  ],
                 ),
                 const Text(
                   "\nYour Events",
                   style: TextStyle(
                     fontFamily: 'Helvetica',
                     color: Colors.white,
-                    fontSize: 22
+                    fontSize: 20
                   ),
                 ),
               ],
+
             ),
           ),
           backgroundColor: Colors.grey.shade900,
@@ -50,10 +83,19 @@ class Attendance extends StatelessWidget {
                 horizontal: MediaQuery.of(context).size.width * 0.05,
                 vertical: MediaQuery.of(context).size.height * 0.005),
             child: context.watch<ApiProvider>().eventsLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
+                ?  const Center(
+                    child:CircularProgressIndicator(
+
+                      color: Color.fromRGBO(68, 223, 180, 1),
+                    ),
                   )
-                : ListView.builder(
+                : context.watch<ApiProvider>().events.isEmpty ? const Center(
+                  child:  Text("No Events",style: TextStyle(
+              color: Colors.white,
+
+            ),),
+                ) : ListView.builder(
+              physics: const BouncingScrollPhysics(),
                     itemCount: context.watch<ApiProvider>().events.length,
                     itemBuilder: (BuildContext context, int index) => EventCard(
                       event: context.read<ApiProvider>().events[index],
