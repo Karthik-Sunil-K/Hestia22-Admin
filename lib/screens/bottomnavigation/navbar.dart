@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hestiaadmin/screens/attendance/attendance.dart';
+import 'package:hestiaadmin/screens/winners/add_winners.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -9,10 +11,11 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int newIndex=0;
+  final screens =[Attendance(),AddWinners()];
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body: Center(child: Text('HAii'),),
+      body: screens[newIndex],
       bottomNavigationBar: BottomNavigationBar(
         
         currentIndex: newIndex,
@@ -30,19 +33,9 @@ class _NavBarState extends State<NavBar> {
             ),
            BottomNavigationBarItem(
             icon: Icon(Icons.add_card),
-            label: 'Spot',
-
+            label: 'Winner',
             ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_active_rounded),
-            label: 'Notification',
-
-            ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-
-            ),
+           
         ],)
     );
   }

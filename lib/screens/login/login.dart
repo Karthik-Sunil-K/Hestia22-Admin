@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-// import 'package:hestia22/main.dart' as main;
+import 'package:hestiaadmin/main.dart' as main;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -48,27 +48,27 @@ class _LoginPageState extends State<LoginPage> {
                           setState(() {
                             _text = 'Logging you in...';
                           });
-                          // if (await main.auth.login()) {
-                          //   setState(() {
-                          //     _text = 'Logged in';
-                          //   });
-                          // } else {
-                          //   _text = 'Error logging in...';
+                          if (await main.auth.login()) {
+                            setState(() {
+                              _text = 'Logged in';
+                            });
+                          } else {
+                            _text = 'Error logging in...';
 
-                          //   Future.delayed(const Duration(milliseconds: 1000),
-                          //       () {
-                          //     setState(() {
-                          //       _text = 'Try again...';
-                          //     });
-                          //   });
+                            Future.delayed(const Duration(milliseconds: 1000),
+                                () {
+                              setState(() {
+                                _text = 'Try again...';
+                              });
+                            });
 
-                          //   Future.delayed(const Duration(milliseconds: 2500),
-                          //       () {
-                          //     setState(() {
-                          //       _text = 'Continue with Google';
-                          //     });
-                          //   });
-                          // }
+                            Future.delayed(const Duration(milliseconds: 2500),
+                                () {
+                              setState(() {
+                                _text = 'Continue with Google';
+                              });
+                            });
+                          }
                         },
                       ),
                     ),
