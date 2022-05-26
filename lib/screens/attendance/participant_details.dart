@@ -40,6 +40,7 @@ class ParticipantDetails extends StatelessWidget {
           appBar: AppBar(
             shadowColor: Colors.transparent,
             backgroundColor: Colors.grey.shade900,
+            foregroundColor: const Color.fromRGBO(68, 223, 180, 1),
             title: const Text('Team details'),
           ),
           // body: Column(
@@ -55,9 +56,11 @@ class ParticipantDetails extends StatelessWidget {
 
           body: context.watch<ApiProvider>().teamLoading
               ? SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.height,
                   child: const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      color: Color.fromRGBO(68, 223, 180, 1),
+                    ),
                   ),
                 )
               : Padding(
@@ -68,27 +71,42 @@ class ParticipantDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'TeamLeader: ' + team!.teamLeader.name,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline5!
-                            .copyWith(color: Colors.white),
-                      ),
-                      smallGap,
-                      Text(
-                        'email: ' + team.teamLeader.email,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(color: Colors.white),
-                      ),
-                      Text(
-                        'phone number: ' + team.teamLeader.phoneNumber,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(color: Colors.white),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Card(
+                          color: Colors.transparent,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'TeamLeader: ' + team!.teamLeader.name,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(color: Colors.white),
+                                ),
+                                smallGap,
+                                Text(
+                                  'email: ' + team.teamLeader.email,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(color: Colors.white),
+                                ),
+                                Text(
+                                  'phone number: ' +
+                                      team.teamLeader.phoneNumber,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                       gap,
                       Text(
@@ -102,12 +120,15 @@ class ParticipantDetails extends StatelessWidget {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: team.members.accepted.length,
-                        itemBuilder: ((context, index) => ListTile(
-                              textColor: Colors.white,
-                              title:
-                                  Text(team.members.accepted[index].user.name),
-                              subtitle:
-                                  Text(team.members.accepted[index].user.email),
+                        itemBuilder: ((context, index) => Card(
+                              color: Colors.transparent,
+                              child: ListTile(
+                                textColor: Colors.white,
+                                title: Text(
+                                    team.members.accepted[index].user.name),
+                                subtitle: Text(
+                                    team.members.accepted[index].user.email),
+                              ),
                             )),
                       ),
                       gap,
@@ -122,12 +143,15 @@ class ParticipantDetails extends StatelessWidget {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: team.members.pending.length,
-                        itemBuilder: ((context, index) => ListTile(
-                              textColor: Colors.white,
-                              title:
-                                  Text(team.members.pending[index].user.name),
-                              subtitle:
-                                  Text(team.members.pending[index].user.email),
+                        itemBuilder: ((context, index) => Card(
+                              color: Colors.transparent,
+                              child: ListTile(
+                                textColor: Colors.white,
+                                title:
+                                    Text(team.members.pending[index].user.name),
+                                subtitle: Text(
+                                    team.members.pending[index].user.email),
+                              ),
                             )),
                       ),
                     ],
