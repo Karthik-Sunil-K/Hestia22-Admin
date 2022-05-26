@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hestiaadmin/screens/attendance/api_provider.dart';
 import 'package:hestiaadmin/screens/attendance/attendance.dart';
 import 'package:hestiaadmin/screens/attendance/team_details.dart';
@@ -12,7 +13,9 @@ import 'screens/login/login.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 GoogleAuth auth = GoogleAuth();
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await auth.initLogin();
   runApp(const MyApp());
 }
 
@@ -54,6 +57,29 @@ class _MyHomePageState extends State<MyHomePage> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     // TODO: Replace with provider once backend is up
+    // return MaterialApp(
+    //   debugShowCheckedModeBanner: false,
+    //   title: 'Hestia22',
+    //   theme: ThemeData(
+    //     fontFamily: "Helvetica",
+    //     primarySwatch: Colors.grey,
+    //     highlightColor: Colors.transparent,
+    //     splashColor: Colors.transparent,
+    //   ),
+    //   home: StreamBuilder(
+    //     stream: auth.googleSignIn.onCurrentUserChanged,
+    //     builder: (BuildContext context,
+    //         AsyncSnapshot<GoogleSignInAccount?> snapshot) {
+    //       if (auth.token == null || auth.token!.isEmpty) {
+    //         return const LoginPage();
+    //       } else {
+    //           return const NavBar();
+            
+    //       }
+    //     },
+    //   ),
+    // );
+    //TESTING HOME UI
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(5.0),
