@@ -36,8 +36,10 @@ class ParticipantDetails extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Colors.grey.shade900,
           appBar: AppBar(
-            backgroundColor: const Color.fromRGBO(68, 223, 180, 1),
+            shadowColor: Colors.transparent,
+            backgroundColor: Colors.grey.shade900,
             title: const Text('Team details'),
           ),
           // body: Column(
@@ -68,27 +70,40 @@ class ParticipantDetails extends StatelessWidget {
                     children: [
                       Text(
                         'TeamLeader: ' + team!.teamLeader.name,
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5!
+                            .copyWith(color: Colors.white),
                       ),
                       smallGap,
                       Text(
                         'email: ' + team.teamLeader.email,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.white),
                       ),
                       Text(
                         'phone number: ' + team.teamLeader.phoneNumber,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(color: Colors.white),
                       ),
                       gap,
                       Text(
                         'Accepted',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: Colors.white),
                       ),
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: team.members.accepted.length,
                         itemBuilder: ((context, index) => ListTile(
+                              textColor: Colors.white,
                               title:
                                   Text(team.members.accepted[index].user.name),
                               subtitle:
@@ -98,13 +113,17 @@ class ParticipantDetails extends StatelessWidget {
                       gap,
                       Text(
                         'Pending',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: Colors.white),
                       ),
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: team.members.pending.length,
                         itemBuilder: ((context, index) => ListTile(
+                              textColor: Colors.white,
                               title:
                                   Text(team.members.pending[index].user.name),
                               subtitle:
