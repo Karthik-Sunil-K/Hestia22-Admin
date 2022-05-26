@@ -25,10 +25,23 @@ Future<List<Participant>> getParticipants(String eventSlug) async {
   return result;
 }
 
-Future<List<dynamic>> postAttendance(String teamSlug) async {
-  http.Response response = await http
-      .post(Uri.parse(hostUrl + "/api/v1/event/attendance/$teamSlug/update"));
-  return json.decode(response.body)['results'];
+Future<void> putAttendance(String teamSlug, bool isPresent) async {
+  final String token = 'fdee6ed3ce930d356ea67807b4d1de44dfcae873';
+
+  final jsonBody = json.encode({"attendance": isPresent});
+  print(jsonBody);
+
+  http.Response response = await http.put(
+      Uri.parse(hostUrl + "/api/v1/event/attendance/$teamSlug/update"),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': "token " + token,
+      },
+      body: jsonBody);
+  print(teamSlug);
+  print(response.body);
+  // return json.decode(response.body)['results'];
 }
 
 // Future<List<dynamic>> getAllEvents() async {
