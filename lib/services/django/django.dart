@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:hestiaadmin/models/event.dart';
 import 'package:hestiaadmin/models/participant.dart';
+import 'package:hestiaadmin/models/team.dart';
 import 'package:http/http.dart' as http;
 
 String hostUrl = "https://backend.hestiatkmce.live";
@@ -11,6 +12,7 @@ Future<List<Event>> getAllEvents() async {
   http.Response response = await http.get(
       Uri.parse(hostUrl + "/api/v1/event/coordinator/"),
       headers: {'Authorization': "token " + token});
+  print(response.body);
   final result = eventFromJson(json.decode(response.body)['results']);
   return result;
 }
@@ -22,6 +24,16 @@ Future<List<Participant>> getParticipants(String eventSlug) async {
       headers: {'Authorization': "token " + token});
   print(response.body);
   final result = participantFromJson(response.body);
+  return result;
+}
+
+Future<Team> getTeamDetails(String teamSlug) async {
+  final String token = 'fdee6ed3ce930d356ea67807b4d1de44dfcae873';
+  http.Response response = await http.get(
+      Uri.parse(hostUrl + "/api/v1/event/detail/$teamSlug"),
+      headers: {'Authorization': "token " + token});
+  print(response.body);
+  final result = teamFromJson(response.body);
   return result;
 }
 
@@ -41,12 +53,14 @@ Future<void> putAttendance(String teamSlug, bool isPresent) async {
       body: jsonBody);
   print(teamSlug);
   print(response.body);
+  print(response.statusCode);
   // return json.decode(response.body)['results'];
 }
 
-Future<List<dynamic>> putWinners(String email1, String email2, String email3, String slug) async {
-  http.Response response = await http
-      .post(Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"));
+Future<List<dynamic>> putWinners(
+    String email1, String email2, String email3, String slug) async {
+  http.Response response =
+      await http.post(Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"));
   return json.decode(response.body)['results'];
 }
 

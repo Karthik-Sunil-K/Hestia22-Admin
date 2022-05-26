@@ -31,7 +31,7 @@ class Participant {
         teamLeader: TeamLeader.fromJson(json["team_leader"]),
         attendance: json["attendance"],
         isSpot: json["is_spot"],
-        slug: json["slug"],
+        slug: json["slug"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

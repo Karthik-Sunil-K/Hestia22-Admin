@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hestiaadmin/models/event.dart';
 import 'package:hestiaadmin/models/participant.dart';
 import 'package:hestiaadmin/screens/attendance/api_provider.dart';
+import 'package:hestiaadmin/screens/attendance/participant_details.dart';
 import 'package:provider/provider.dart';
 
 class AttendanceDetailed extends StatelessWidget {
@@ -16,7 +17,7 @@ class AttendanceDetailed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isInit) {
-      context.read<ApiProvider>().fetchParticipants('wordsmith');
+      context.read<ApiProvider>().fetchParticipants(event.slug);
       isInit = false;
     }
 
@@ -103,6 +104,12 @@ class _AttendanceTileState extends State<AttendanceTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: (() => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: ((context) =>
+                  ParticipantDetails(participant: widget.participant)),
+            ),
+          )),
       tileColor: widget.alternate ? Color.fromARGB(255, 50, 50, 50) : null,
       textColor: Colors.white,
       iconColor: Colors.white,
