@@ -44,6 +44,13 @@ Future<void> putAttendance(String teamSlug, bool isPresent) async {
   // return json.decode(response.body)['results'];
 }
 
+Future<List<dynamic>> putWinners(String email1, String email2, String email3, String slug) async {
+  http.Response response = await http
+      .post(Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"));
+  return json.decode(response.body)['results'];
+}
+
+
 // Future<List<dynamic>> getAllEvents() async {
 //   http.Response response =
 //       await http.get(Uri.parse(hostUrl + "/api/v1/event/"));
