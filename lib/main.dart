@@ -4,6 +4,7 @@ import 'package:hestiaadmin/screens/attendance/attendance.dart';
 
 import 'package:hestiaadmin/screens/bottomnavigation/navbar.dart';
 import 'package:hestiaadmin/screens/spot_registration/spot_registration.dart';
+import 'package:hestiaadmin/screens/winners/add_winners.dart';
 import 'package:hestiaadmin/services/django/google_auth.dart';
 import 'package:provider/provider.dart';
 import 'screens/login/login.dart';
@@ -94,6 +95,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             builder: (context) => const LoginPage()));
                   },
                   child: const Text("login")),
+                  ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AddWinners()));
+                  },
+                  child: const Text("Winners")),
             ],
           ),
         ),
