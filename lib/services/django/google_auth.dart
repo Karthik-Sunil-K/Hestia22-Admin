@@ -13,10 +13,10 @@ class GoogleAuth extends ChangeNotifier {
   Future<void> initLogin() async {
     token = await const FlutterSecureStorage().read(key: 'token');
     token ??= "";
-    // isCompleted =
-    //     await const FlutterSecureStorage().read(key: 'is_completed') == "true"
-    //         ? true
-    //         : false;
+    isCompleted =
+        await const FlutterSecureStorage().read(key: 'is_completed') == "true"
+            ? true
+            : false;
     notifyListeners();
 
     googleSignIn.signInSilently();
