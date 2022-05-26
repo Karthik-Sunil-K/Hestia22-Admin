@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         MaterialPageRoute(
                             builder: (context) => const AddWinners()));
                   },
-                  child: const Text("Winners")),
+                  child: const Text("Winner")),
             ],
           ),
         ),
