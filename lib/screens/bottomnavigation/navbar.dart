@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hestiaadmin/screens/attendance/attendance.dart';
+import 'package:hestiaadmin/screens/winners/add_winners.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int newIndex=0;
-  final screens =[Attendance(),Center(child: Text("haaai"),)];
+  final screens =[Attendance(),AddWinners()];
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
