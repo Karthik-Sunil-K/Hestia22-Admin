@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hestiaadmin/services/django/google_auth.dart';
+import '../../main.dart';
 import '../../services/django/django.dart';
 
 class AddWinners extends StatefulWidget {
@@ -228,14 +229,11 @@ class _AddWinnersState extends State<AddWinners> {
                   onPressed: () async {
                     print("The slug is : ");
                     print(widget.slug);
-                    if (email1==null&&
-                        email2==null &&
-                        email3==null ) {
+                    if (email1 == null && email2 == null && email3 == null) {
                       print("all null ");
                     } else {
-                      dynamic result =
-                          await putWinners(email1, email2, email3, widget.slug);
-
+                      dynamic result = await auth.putWinners(
+                          email1, email2, email3, widget.slug);
                     }
                   },
                   child: const Text(

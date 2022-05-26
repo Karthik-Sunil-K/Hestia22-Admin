@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hestiaadmin/main.dart';
 import 'package:hestiaadmin/models/event.dart';
 import 'package:hestiaadmin/models/participant.dart';
 
 import '../../services/django/django.dart';
+
 class ApiProvider with ChangeNotifier {
   bool eventsLoading = true;
   bool participantsLoading = true;
@@ -11,7 +13,7 @@ class ApiProvider with ChangeNotifier {
   List<Participant> participants = [];
 
   void fetchEvents() async {
-    events = await getAllEvents();
+    events = await auth.getAllEvents();
     print(events[0].slug);
     eventsLoading = false;
     notifyListeners();
@@ -21,7 +23,7 @@ class ApiProvider with ChangeNotifier {
     participantsLoading = true;
     notifyListeners();
 
-    participants = await getParticipants(eventSlug);
+    participants = await auth.getParticipants(eventSlug);
     print(participants);
     participantsLoading = false;
     notifyListeners();
@@ -29,7 +31,7 @@ class ApiProvider with ChangeNotifier {
 
   void markAttendance(Participant participant, bool attendance) async {
     //TODO: Api CALL
-    await putAttendance(participant.slug, attendance);
+    await auth.putAttendance(participant.slug, attendance);
     print(participant.slug + attendance.toString());
   }
 }
