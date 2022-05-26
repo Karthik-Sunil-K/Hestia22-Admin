@@ -16,7 +16,7 @@ class AttendanceDetailed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isInit) {
-      context.read<ApiProvider>().fetchParticipants('wordsmith');
+      context.read<ApiProvider>().fetchParticipants(event.slug);
       isInit = false;
     }
 

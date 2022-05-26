@@ -11,6 +11,7 @@ Future<List<Event>> getAllEvents() async {
   http.Response response = await http.get(
       Uri.parse(hostUrl + "/api/v1/event/coordinator/"),
       headers: {'Authorization': "token " + token});
+  print(response.body);
   final result = eventFromJson(json.decode(response.body)['results']);
   return result;
 }
@@ -44,12 +45,34 @@ Future<void> putAttendance(String teamSlug, bool isPresent) async {
   // return json.decode(response.body)['results'];
 }
 
-Future<List<dynamic>> putWinners(String email1, String email2, String email3, String slug) async {
-  http.Response response = await http
-      .post(Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"));
-  return json.decode(response.body)['results'];
+Future<Map> putWinners(
+    String? email1, String? email2, String? email3, String? slug) async {
+  final String token = 'fdee6ed3ce930d356ea67807b4d1de44dfcae873';
+  late http.Response response;
+  if(email1!=null)
+    {
+      response = await http.patch(
+          Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"),
+          headers: {'Authorization': "token " + token},
+          body: {"email1": email1.toString(),"email2":"","email3":""});
+    }
+  if(email2!=null)
+  {
+    response = await http.patch(
+        Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"),
+        headers: {'Authorization': "token " + token},
+        body: {"email2": email2.toString(),"email1":"","email3":""});
+  }
+  if(email3!=null)
+  {
+    response = await http.patch(
+        Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"),
+        headers: {'Authorization': "token " + token},
+        body: {"email1":"","email2":"","email3": email3.toString()});
+  }
+  print(response.statusCode);
+  return json.decode(response.body);
 }
-
 
 // Future<List<dynamic>> getAllEvents() async {
 //   http.Response response =

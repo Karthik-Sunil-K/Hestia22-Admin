@@ -23,11 +23,12 @@ class _LoginPageState extends State<LoginPage> {
         width: screenWidth,
         child: Stack(
           children: [
-            SizedBox(
-              height: screenHeight * 1.2,
-              width: screenWidth * 1.3,
-              child:
-                  Image.asset("assets/applogo.gif"),
+            Center(
+              child: SizedBox(
+                height: screenHeight * 0.35,
+                width: screenWidth * 0.35,
+                child: Image.asset("assets/applogo.gif"),
+              ),
             ),
             Center(
               child: Column(
@@ -38,8 +39,8 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: const BoxDecoration(
                         color: Color(0xff121212),
                         borderRadius: BorderRadius.all(Radius.circular(25))),
-                    height: 70,
-                    width: 280,
+                    height: screenHeight*0.075,
+                    width: screenWidth*0.8,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),
                       child: RoundedButton(
@@ -73,8 +74,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 50,
+                   SizedBox(
+                    height: screenHeight*0.08,
                   ),
                 ],
               ),

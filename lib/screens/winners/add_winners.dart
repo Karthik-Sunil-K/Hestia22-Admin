@@ -1,40 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hestiaadmin/services/django/google_auth.dart';
+import '../../services/django/django.dart';
 
 class AddWinners extends StatefulWidget {
-  final List<dynamic>? a;
-  const AddWinners({Key? key, this.a}) : super(key: key);
+  String slug;
+  AddWinners({Key? key, required this.slug}) : super(key: key);
 
   @override
   State<AddWinners> createState() => _AddWinnersState();
 }
 
 class _AddWinnersState extends State<AddWinners> {
-
-  
   static bool start = false;
-
+  String? email1, email2, email3;
   final TextEditingController _textEditingController = TextEditingController();
-
-  List<String> _getSuggestions(String pattern) {
-    List<String> list = []; 
-    if (widget.a != null) {
-      for (var map in widget.a!) {
-        if (list.length < 4) {
-          if (map['title'].toLowerCase().contains(pattern.toLowerCase())) {
-            list.add(map['title']);
-            if (list.length == 4) {
-              break;
-            }
-          }
-        }
-      }
-      return list;
-    } else {
-      return list;
-    }
-  }
 
   @override
   void initState() {
@@ -48,17 +27,20 @@ class _AddWinnersState extends State<AddWinners> {
       }
     });
   }
+
   final gap = const SizedBox(height: 20);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    
+
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 100),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: size.width * 0.05, vertical: size.height * 0.1),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               // AnimatedPadding(
@@ -206,19 +188,56 @@ class _AddWinnersState extends State<AddWinners> {
               //     ),
               //   ),
               // ),
-              _TextField(hintText: 'First Prize', valueChanged: (_) {}),
-                gap,
-                _TextField(hintText: 'Second Prize', valueChanged: (_) {}),
-                gap,
-                _TextField(hintText: 'Third Prize', valueChanged: (_) {}),
-                gap,
+              const Center(
+                  child: Text(
+                "Add Winners",
+                style: TextStyle(
+                  fontSize: 32,
+                  color: Color.fromRGBO(68, 223, 180, 1),
+                  fontFamily: 'Helvetica',
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.75,
+                height: size.height * 0.08,
+              ),
+              _TextField(
+                  hintText: 'First Prize',
+                  valueChanged: (value) {
+                    email1 = value;
+                  }),
+              gap,
+              _TextField(
+                  hintText: 'Second Prize',
+                  valueChanged: (value) {
+                    email2 = value;
+                  }),
+              gap,
+              _TextField(
+                  hintText: 'Third Prize',
+                  valueChanged: (value) {
+                    email3 = value;
+                  }),
+              gap,
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.95,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: const Color.fromRGBO(68, 223, 180, 1),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    print("The slug is : ");
+                    print(widget.slug);
+                    if (email1==null&&
+                        email2==null &&
+                        email3==null ) {
+                      print("all null ");
+                    } else {
+                      dynamic result =
+                          await putWinners(email1, email2, email3, widget.slug);
+
+                    }
+                  },
                   child: const Text(
                     'Submit',
                     style: TextStyle(
@@ -266,6 +285,7 @@ class _TextFieldState extends State<_TextField> {
       }),
     );
   }
+
   final TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -321,4 +341,3 @@ class _TextFieldState extends State<_TextField> {
     );
   }
 }
-

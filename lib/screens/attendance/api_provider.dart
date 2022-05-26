@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hestiaadmin/models/event.dart';
 import 'package:hestiaadmin/models/participant.dart';
-import 'package:hestiaadmin/services/django/django.dart';
 
+import '../../services/django/django.dart';
 class ApiProvider with ChangeNotifier {
   bool eventsLoading = true;
   bool participantsLoading = true;

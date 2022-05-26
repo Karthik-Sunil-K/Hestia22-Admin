@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hestiaadmin/screens/attendance/api_provider.dart';
 import 'package:hestiaadmin/screens/attendance/attendance_detailed.dart';
+import 'package:hestiaadmin/screens/direction/director.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/event.dart';
@@ -52,11 +53,9 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        print("ontap");
         Navigator.of(context).push(MaterialPageRoute(
-            builder: ((context) => AttendanceDetailed(
-                  event: event,
-                ))));
-        print('Tapped');
+            builder: ((context) => Director(eventDetails: event,))));
       },
       child: SizedBox(
         height: 150,
@@ -65,15 +64,16 @@ class EventCard extends StatelessWidget {
           color: Colors.grey.shade800,
           elevation: 5,
           child: Padding(
-            padding: const EdgeInsets.only(
-              top: 80,
-              left: 20,
-            ),
-            child: Text(
-              event.title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 32,
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: Text(
+                event.title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: 32,
+                ),
               ),
             ),
           ),

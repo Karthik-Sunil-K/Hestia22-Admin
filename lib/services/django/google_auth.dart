@@ -4,6 +4,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../../models/event.dart';
+import '../../models/participant.dart';
+
 class GoogleAuth extends ChangeNotifier {
   String? token;
   bool? isCompleted;
@@ -67,7 +70,65 @@ class GoogleAuth extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Event>> getAllEvents() async {
 
-  
-  
+    http.Response response = await http.get(
+        Uri.parse(hostUrl + "/api/v1/event/coordinator/"),
+        headers: {'Authorization': "token " + token!});
+    print(response.body);
+    final result = eventFromJson(json.decode(response.body)['results']);
+    return result;
+  }
+
+  Future<List<Participant>> getParticipants(String eventSlug) async {
+    http.Response response = await http.get(
+        Uri.parse(hostUrl + "/api/v1/event/attendance/$eventSlug"),
+        headers: {'Authorization': "token " + token!});
+    print(response.body);
+    final result = participantFromJson(response.body);
+    return result;
+  }
+
+  Future<void> putAttendance(String teamSlug, bool isPresent) async {
+
+    final jsonBody = json.encode({"attendance": isPresent});
+    print(jsonBody);
+
+    http.Response response = await http.put(
+        Uri.parse(hostUrl + "/api/v1/event/attendance/$teamSlug/update"),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': "token " + token!,
+        },
+        body: jsonBody);
+    print(teamSlug);
+    print(response.body);
+    // return json.decode(response.body)['results'];
+  }
+
+  Future<Map> putWinners(
+      String? email1, String? email2, String? email3, String? slug) async {
+    late http.Response response;
+    if (email1 != null) {
+      response = await http.patch(
+          Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"),
+          headers: {'Authorization': "token " + token!},
+          body: {"email1": email1.toString(), "email2": "", "email3": ""});
+    }
+    if (email2 != null) {
+      response = await http.patch(
+          Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"),
+          headers: {'Authorization': "token " + token!},
+          body: {"email2": email2.toString(), "email1": "", "email3": ""});
+    }
+    if (email3 != null) {
+      response = await http.patch(
+          Uri.parse(hostUrl + "/api/v1/event/winner/$slug/update"),
+          headers: {'Authorization': "token " + token!},
+          body: {"email1": "", "email2": "", "email3": email3.toString()});
+    }
+    print(response.statusCode);
+    return json.decode(response.body);
+  }
 }
